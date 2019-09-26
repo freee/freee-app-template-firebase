@@ -1,0 +1,34 @@
+{
+  "scripts": {
+    "start": "firebase serve",
+    "build": "webpack",
+    "watch": "NODE_ENV=development webpack --mode development -w",
+    "fmt": "prettier --config '../.prettierrc' --write 'src/**/*.{tsx,ts}'"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/dotenv": "^6.1.1",
+    "@types/firebase": "^3.2.1",
+    "css-loader": "^2.1.1",
+    "dotenv-webpack": "^1.7.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "hard-source-webpack-plugin": "^0.13.1",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "prettier": "^1.17.0",
+    "style-loader": "^0.23.1",
+    "ts-loader": "^5.3.3",
+    "tslint": "^5.16.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.0.1",
+    "webpack": "^4.17.1",
+    "webpack-bundle-analyzer": "^3.3.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.3.1"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "querystring": "^0.2.0"
+  },
+  "private": true
+}

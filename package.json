@@ -1,0 +1,27 @@
+{
+  "name": "freee-app-template-firebase",
+  "version": "1.0.0",
+  "description": "Sample application for freee app on firebase",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently -kill-others-on-fail \"cd hosting; npm run watch\" \"cd functions; npm run watch\" \"cd hosting; npm run start\" ",
+    "deploy": "cd hosting; npm run build; cd ../functions; npm run build; firebase deploy",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "setup": "npm install; cd hosting; npm install; cd ../functions; npm install;",
+    "function-fmt": "cd functions && npm run fmt",
+    "hosting-fmt": "cd hosting && npm run fmt",
+    "project-fmt": "npm run function-fmt && npm run hosting-fmt"
+  },
+  "devDependencies": {
+    "concurrently": "^4.0.1",
+    "husky": "^2.2.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run project-fmt"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

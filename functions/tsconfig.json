@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "module": "commonjs",
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "outDir": "lib",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2017",
+    "noImplicitAny": false
+  },
+  "compileOnSave": true,
+  // nullチェックを有効にする
+  "strictNullChecks": true,
+  "include": ["src", "node_modules/@types/jest"]
+}

@@ -1,0 +1,15 @@
+{
+    "company_id": 2,
+    "issue_date": "2019-04-01",
+    "type": "income",
+    "partner_id": 40,
+    "details": [
+        {
+            "account_item_id": 196,
+            "tax_code": 108,
+            "amount": 10800,
+            "vat": 800,
+            "description": "売上"
+        }
+    ]
+}
