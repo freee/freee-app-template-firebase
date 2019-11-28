@@ -22,4 +22,7 @@ firebase-debug.log
 /functions/src/config/**
 /functions/.runtimeconfig.json
 
+## IDE setting
+.idea
+
 !.gitkeep

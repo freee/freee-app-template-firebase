@@ -4,7 +4,7 @@
  * sdk instanceを複数作ると、内部でfirebaseのinstanceがあるためfirebaseの警告が出るので
  * 回避するためにinstanceをexportする
  */
-import { FreeeServerSDK } from '@freee-api/firebase-sdk'
+import { FreeeServerSDK } from 'freee-firebase-sdk'
 import * as functions from 'firebase-functions'
 
 const env = functions.config().env
