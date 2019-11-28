@@ -48,14 +48,14 @@ Firestore、Storage はアクティベーションをしておかないとエラ
 
 ```
 {
-    "env": {
-        "mode": "local",
-        "serviceaccountpath": "config/service-account.json"
-    },
-    "freee": {
-        "client_id": "登録したアプリのclient_id",
-        "client_secret": "登録したアプリのclient_secret",
-    }
+  "env": {
+    "serviceaccountpath": "config/service-account.local.json",
+    "mode": "local"
+  },
+  "freee": {
+    "client_id": "登録したfreeアプリのclient_id",
+    "client_secret": "登録したfreeアプリのclient_secret"
+  }
 }
 ```
 

@@ -27,7 +27,7 @@ authRouter.get(auth.getRedirectPath(), (req, res) => {
 // Get token, login firebase and save token to firebase
 authRouter.get(auth.getCallbackPath(), (req, res) => {
   console.log('Callback is called')
-  return auth.callback(req.query.code, res)
+  auth.callback(req.query.code, res)
 })
 
 authApp.use('/auth', authRouter)
