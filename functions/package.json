@@ -17,7 +17,7 @@
   },
   "main": "dist/index.js",
   "dependencies": {
-    "freee-firebase-sdk": "github:freee/firebase-sdk-js",
+    "freee-firebase-sdk": "^1.0.0",
     "axios": "^0.19.0",
     "body-parser": "^1.18.3",
     "date-fns": "^1.30.1",
