@@ -9,7 +9,21 @@
 - ログアウト
 - 事業所情報の読み込み (GET api/1/users/me)
 - 取引情報の登録 (POST api/1/deals)
-- アクセストークン、リフレッシュトークンの暗号化
+- アクセストークン、リフレッシュトークンの暗号化と key rotation
+
+## フォルダ構成
+静的ファイルを所有する任意のドメインで配布する [Firebase Hosting](https://firebase.google.com/docs/hosting/?hl=ja) から [Firebase Cloud Functions](https://firebase.google.com/docs/functions?hl=ja) を call して、 freee API や [Cloud FireStore](https://firebase.google.com/docs/firestore?hl=ja)（NoSQL database）にアクセスしてアプリが動作します。
+
+Firebase での Web アプリ作成については[公式リファレンス](https://firebase.google.com/docs/web/setup?hl=ja)もご参照ください。 
+
+```
+Root
+├ hosting .. Firebas Hosting にデプロイされるソースのルートフォルダ
+├ functions .. Firebase Cloud Functions にデプロイされるソースのルートフォルダ
+　　 ├ config .. 各種 configuration
+　　 ├ config.xxxx.json .. SDKConfig 用の設定情報
+　　 ├ service-account.json .. Service Account credential file for firebase
+```
 
 ## 開発環境のセットアップ
 
@@ -46,9 +60,9 @@ Firestore、Storage デプロイ時にエラーになるため、サイドバー
 -  その他上書きが発生する場合は、全て no を選択
 
 ⑥ freee アプリストアでアプリを作成する  
-`https://app.secure.freee.co.jp/developers/demo_companies/description`  
-こちらを参考にしながらアプリを作成する。  
-コールバック URL は `http://localhost:5001/作成したfirebaseプロジェクト名/asia-northeast1/api/auth/callback` で設定する。
+  
+[こちら](https://app.secure.freee.co.jp/developers/demo_companies/description)を参考にしながらアプリを作成してください。  
+コールバック URL は `http://localhost:5001/{{project-id}}/asia-northeast1/api/auth/callback` にしてください。
 
 ### Step2: Cloud Functions の設定
 
@@ -56,8 +70,8 @@ Cloud Functions はサーバーレスで実行できる関数で、ローカル�
 ここでは、ローカルで Cloud Functions を動作させる手順を紹介します。
 
 ① `functions/.runtimeconfig.json` を準備する  
-以下のように設定する。
-`env.mode`は`functions/src/config/config.xxx.json`の環境ごとの読み分けに利用する変数。
+以下のように設定してください。
+`env.mode`は`functions/src/config/config.xxx.json`の環境ごとの読み分けに利用する変数です。
 
 ```
 {
@@ -78,7 +92,7 @@ Cloud Functions はサーバーレスで実行できる関数で、ローカル�
 ② サービスアカウント認証用ファイルを準備する
 [こちらのリンク](https://firebase.google.com/docs/auth/web/custom-auth?hl=ja) を参考に json file をダウンロードし、 `functions/src/config/service-account.local.json` というファイルで保存してください。
 
-service-account.jsonの中身の例
+`service-account.local.json` の中身の例
 
 ```
 {
@@ -94,6 +108,24 @@ service-account.jsonの中身の例
   "client_x509_cert_url": "xxx"
 }
 
+```
+
+③ サービス固有の設定ファイルを準備する
+`functions/config.local.json` に以下のファイルを準備してください。
+
+```
+{
+  "freee": {
+    "authHost": "https://asia-northeast1-freee-sample-app.cloudfunctions.net/api/auth",
+    "appHost": "https://freee-sample.freee-apps.jp",
+    "homePath": "/home",
+    "tokenHost": "https://accounts.secure.freee.co.jp",
+    "apiHost": "https://api.freee.co.jp"
+  },
+  "firebase": {
+    "cryptoKeyBucket": "{{project-id}}.appspot.com"
+  }
+}
 ```
 
 ### step3: Firebase Hosting の設定
@@ -123,68 +155,39 @@ CFO_DOMAIN=https://secure.freee.co.jp
 
 ② `npm start` を実行し、`http://localhost:5000` （hosting のURL）にアクセスする
 
-## デプロイ
+## デプロイ（本番環境で動作させる）
 
-`npm run deploy` を実行してください。ローカル以外で Cloud Funtions を動作させるためには、`.runtimeconfig.json` の内容を functions に設定する必要があります。[こちらのリンク](https://firebase.google.com/docs/functions/config-env#set_environment_configuration_for_your_project)を参考に設定を行ってください。
-
-## フォルダ構成
+### project 作成
+本番用に改めて firebase project と freee のアプリを作成してください。
+firebase project を作成したら、コマンドラインからプロジェクトの切り替えを行います。
 
 ```
-Root
-│
-├ hosting .. Firebas Hosting にデプロイされるソースのルートフォルダ
-├ functions .. firebase Cloud Functions にデプロイされるソースのルートフォルダ
-　　 ├ config .. 各種 configuration
-　　 ├ config.xxxx.json .. SDKConfig 用の設定情報
-　　 ├ service-account.json .. Service Account credential file for firebase
+$ firebase use {{project-id}}
 ```
+
+また、freee のアプリのコールバック URL には、以下を設定してください。
+
+`https://asia-northeast1-{{project-id}}.cloudfunctions.net/api/auth/callback`
+
+### production 用の Cloud Functions の設定
+ローカル環境用に設定した functions の設定ファイルについても、 production 用に作成する必要があります。
+
+- `functions/config.production.json`
+- `service-account.production.json`
+
+またローカル以外で Cloud Functions を動作させるためには、`.runtimeconfig.json` の内容を functions に設定する必要があります。[こちらのリンク](https://firebase.google.com/docs/functions/config-env#set_environment_configuration_for_your_project)を参考に functions の環境変数設定を行う必要があります。
+以下を参考にコマンドラインから設定してください。
+
+```
+$ firebase functions:config:set env.mode=production env.region="asia-northeast1" freee.client_id=xxx freee.client_secret=xxx env.serviceaccountpath="config/service-account.json"
+```
+
+### デプロイの実行
+
+`npm run deploy` を実行してください。
 
 ## FAQ
 
 Q. firebase の料金プランはどうしたら良いか？  
 A. Blaze プランにする必要があります。freee の API は外部の API にあたり、functions 上からの接続には Blaze プランにする必要があります。
 
-Q. 動作確認でエラーが出る  
-A. 各種 config ファイルや、firebase のセットアップが完了しているか、リージョンが正しいかなどご確認ください。
-
-Q. 本番やデプロイ環境のの各種環境設定ファイルのサンプルが欲しい。  
-A. 以下を参考にしてください。対象ファイルを読み込む対応は別途行ってください。
-
-- `firebase functions:config:get` (`region`は未設定でも`asia-northeast1`に設定されます。また`mode`を`production`に設定することによって SDKConfig の default 値が自動的に設定されます)
-
-```
-{
-  "env": {
-    "mode": "production",
-    "region": "asia-northeast1"
-  },
-  "freee": {
-    "client_id": "xxxxxxxxxxxxxxx",
-    "client_secret":"xxxxxxxxxxxxxx"
-  }
-}
-```
-
-- `hosting/.env.production` (`production`は環境ごとに変わる。アプリ特有の変数を設定しない限り設定不要)
-
-```
-# functionsのURL
-CLOUD_FUNCTION_HOST=https://asia-northeast1-foreign-exchange-app.cloudfunctions.net
-```
-
-- `functions/config.production.json` (`production`は環境ごとに変わる。カスタムドメインや複数 bucket などアプリ特有の変数を設定しない限り設定不要)
-
-```
-{
-    "freee": {
-        "authHost": "https://asia-northeast1-freee-sample-app.cloudfunctions.net/api/auth",
-        "appHost": "https://freee-sample.freee-apps.jp",
-        "homePath": "/home",
-        "tokenHost": "https://accounts.secure.freee.co.jp",
-        "apiHost": "https://api.freee.co.jp"
-    },
-    "firebase": {
-        "cryptoKeyBucket": "freee-sample-app.appspot.com"
-    }
-}
-```
