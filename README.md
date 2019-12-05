@@ -32,12 +32,12 @@ Root
 
 
 ```
-git clone https://github.com/freee/freee-app-template-firebase.git
-cd freee-app-template-firebase.git
+$ git clone https://github.com/freee/freee-app-template-firebase.git
+$ cd freee-app-template-firebase
 ```
 
 ② firebase-tools をインストール  
-`npm install -g firebase-tools`
+`npm install -g firebase-tools@6.7.1`
 
 ③ firebase にログイン  
 `firebase login`  
@@ -111,18 +111,19 @@ Cloud Functions はサーバーレスで実行できる関数で、ローカル�
 ```
 
 ③ サービス固有の設定ファイルを準備する
-`functions/config.local.json` に以下のファイルを準備してください。
+`functions/src/config/config.local.json` に以下のファイルを準備してください。
 
 ```
 {
   "freee": {
-    "authHost": "https://asia-northeast1-freee-sample-app.cloudfunctions.net/api/auth",
-    "appHost": "https://freee-sample.freee-apps.jp",
+    "authHost": "http://localhost:5001/sample-pjt-freee/us-central1/api/auth",
+    "appHost": "http://localhost:5000",
     "homePath": "/home",
     "tokenHost": "https://accounts.secure.freee.co.jp",
     "apiHost": "https://api.freee.co.jp"
   },
   "firebase": {
+    "apiKey": "{{project-api-key}}",
     "cryptoKeyBucket": "{{project-id}}.appspot.com"
   }
 }
@@ -137,10 +138,10 @@ hosting/.env に以下の設定を記載してください。
 
 ```
 # functions の URL
-CLOUD_FUNCTION_HOST=https://asia-northeast1-{{project-id}}.cloudfunctions.net
+CLOUD_FUNCTION_HOST=localhost:5001
 
 # src/firebase/firebase_app で利用する設定ファイルを分岐させるため
-REACT_APP_APP_ENV=production
+REACT_APP_APP_ENV=local
 
 # hosting が接続する functions のリージョンを指定する
 HOSTING_REQUEST_FUNCTIONS_REGION=asia-northeast1
@@ -172,8 +173,26 @@ $ firebase use {{project-id}}
 ### production 用の Cloud Functions の設定
 ローカル環境用に設定した functions の設定ファイルについても、 production 用に作成する必要があります。
 
-- `functions/config.production.json`
 - `service-account.production.json`
+- `functions/src/config/config.production.json`
+
+`functions/src/config/config.production.json` の設定例
+
+```
+{
+  "freee": {
+    "authHost": "https://asia-northeast1-{{project-id}}.cloudfunctions.net/api/auth",
+    "appHost": "{{hosting-url}}/home",
+    "homePath": "/select_company",
+    "tokenHost": "https://accounts.secure.freee.co.jp",
+    "apiHost": "https://api.freee.co.jp"
+  },
+  "firebase": {
+    "apiKey": "{{project-api-key}}",
+    "cryptoKeyBucket": {{project-id}}.appspot.com"
+  }
+}
+```
 
 またローカル以外で Cloud Functions を動作させるためには、`.runtimeconfig.json` の内容を functions に設定する必要があります。[こちらのリンク](https://firebase.google.com/docs/functions/config-env#set_environment_configuration_for_your_project)を参考に functions の環境変数設定を行う必要があります。
 以下を参考にコマンドラインから設定してください。
