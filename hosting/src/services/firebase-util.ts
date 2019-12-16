@@ -1,6 +1,7 @@
 import { getFunctionsLocalHost, isProduction } from '../utils/path'
-
-const functions = firebase.app().functions('asia-northeast1')
+const functions_region =
+  process.env.HOSTING_REQUEST_FUNCTIONS_REGION || 'asia-northeast1'
+const functions = firebase.app().functions(functions_region)
 
 if (!isProduction()) {
   // ローカル環境でfunctions().httpsCallable()呼び出しがエラーにならないようにローカルIPとポートを設定する
