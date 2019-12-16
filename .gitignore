@@ -16,6 +16,7 @@ firebase-debug.log
 
 # hosting
 /hosting/.env*
+hosting/dist/main.js
 
 # functions
 /functions/dist/
