@@ -62,7 +62,7 @@ Firestore、Storage デプロイ時にエラーになるため、サイドバー
 ⑥ freee アプリストアでアプリを作成する  
   
 [こちら](https://app.secure.freee.co.jp/developers/demo_companies/description)を参考にしながらアプリを作成してください。  
-コールバック URL は `http://localhost:5001/{{project-id}}/asia-northeast1/api/auth/callback` にしてください。
+コールバック URL は `http://localhost:5001/{{project-id}}/us-central1/api/auth/callback` にしてください。
 
 ### Step2: Cloud Functions の設定
 
@@ -138,13 +138,16 @@ hosting/.env に以下の設定を記載してください。
 
 ```
 # functions の URL
-CLOUD_FUNCTION_HOST=localhost:5001
+CLOUD_FUNCTION_HOST=http://localhost:5001/{{project-id}}/us-central1
+
+# fucntionsのonCall呼び出しをローカルで動かす時に必要設定(CORSエラー対策)
+CLOUD_FUNCTION_LOCAL_HOST=http://localhost:5001
 
 # src/firebase/firebase_app で利用する設定ファイルを分岐させるため
 REACT_APP_APP_ENV=local
 
 # hosting が接続する functions のリージョンを指定する
-HOSTING_REQUEST_FUNCTIONS_REGION=asia-northeast1
+HOSTING_REQUEST_FUNCTIONS_REGION=us-central1
 
 # 会計 freee のドメイン
 CFO_DOMAIN=https://secure.freee.co.jp
