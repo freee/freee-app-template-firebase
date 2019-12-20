@@ -116,7 +116,7 @@ class Demo {
   }
 
   private async onPostDealButtonClick() {
-    const companyId = this.currentCompanyId
+    const companyId = parseInt(this.currentCompanyId, 10)
     const userId = firebase.auth().currentUser!.uid
     const issue_date = new Date()
     const issue_date_month = ('0' + (issue_date.getMonth() + 1)).slice(-2)
@@ -168,6 +168,7 @@ class Demo {
         )!
         const name = (e.currentTarget as HTMLLIElement).innerText
         this.setCompany(id, name)
+        this.initAccountItems(user)
       })
       this.companiesSelectUl.appendChild(li)
     })
