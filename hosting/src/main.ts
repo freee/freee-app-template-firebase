@@ -116,7 +116,7 @@ class Demo {
   }
 
   private async onPostDealButtonClick() {
-    const companyId = parseInt(this.currentCompanyId, 10)
+    const companyId = this.currentCompanyId
     const userId = firebase.auth().currentUser!.uid
     const issue_date = new Date()
     const issue_date_month = ('0' + (issue_date.getMonth() + 1)).slice(-2)
@@ -127,7 +127,6 @@ class Demo {
       parseInt(this.currentAccountItemIndex, 10)
     ]
     const deal = {
-      company_id: companyId,
       issue_date: issue_date_str,
       type: this.currentType,
       details: [
@@ -139,10 +138,9 @@ class Demo {
         }
       ]
     }
-    console.log('submit deal:', deal)
     const params = deal
     const dealResponse = await FunctionAPI.postDeal(userId, companyId, params)
-    if (dealResponse) {
+    if (dealResponse.deal) {
       alert('Succeed posting deal: \n\n' + JSON.stringify(dealResponse))
     } else {
       alert('Failed to post deal: \n\n' + JSON.stringify(dealResponse))

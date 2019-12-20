@@ -101,14 +101,15 @@ class FreeeApi {
   ): Promise<T> {
     const requestParams = {
       ...params,
-      company_id: companyId
+      company_id: parseInt(companyId, 10)
     }
+    console.log('post requestParams:', requestParams)
     return api
       .post<T>(path, requestParams, userId)
       .then(response => response.data)
       .catch(error => {
         console.error(`Error occured for posting ${path}:`, error.response)
-        return false as any // TODO return proper response
+        return error.response.data as any // TODO return proper response
       })
   }
 }
