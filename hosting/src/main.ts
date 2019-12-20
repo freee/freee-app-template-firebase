@@ -28,7 +28,8 @@ class Demo {
   private accountItemsSelect: HTMLElement
   private accountItemsSelectUl: HTMLElement
 
-  private amountInput: HTMLInputElement
+  private amountInput: HTMLElement
+  private amountInputSection: HTMLInputElement
 
   private companies: any[]
   private accountItems: any[]
@@ -79,7 +80,8 @@ class Demo {
       'account_items-select-ul'
     )!
 
-    this.amountInput = document.getElementById(
+    this.amountInput = document.getElementById('amount-input')!
+    this.amountInputSection = document.getElementById(
       'amount-input-section'
     )! as HTMLInputElement
   }
@@ -240,12 +242,13 @@ class Demo {
   }
 
   private setAmount(amount: string) {
-    this.amountInput.value = amount
+    this.amountInputSection.value = amount
+    this.amountInput.classList.add('is-dirty')
   }
 
   private getAmountValue() {
-    if (this.amountInput.value) {
-      return parseInt(this.amountInput.value, 10)
+    if (this.amountInputSection.value) {
+      return parseInt(this.amountInputSection.value, 10)
     }
     return 0
   }
