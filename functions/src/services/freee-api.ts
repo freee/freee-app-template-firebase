@@ -24,6 +24,19 @@ export interface UserItemCompany {
   use_custom_role: boolean
 }
 
+export interface AccountItems {
+  account_items: AccountItem[]
+}
+
+export interface AccountItem {
+  id: number
+  name: string
+  shortcut: string
+  shortcut_num: string
+  default_tax_id: number
+  categories: string[]
+}
+
 // TODO FIx complete fields
 export interface Deal {
   company_id: number
@@ -53,6 +66,19 @@ class FreeeApi {
   getUsersMe(userId: string): Promise<UsersMe> {
     return api
       .get<UsersMe>('api/1/users/me', { companies: true }, userId)
+      .then(response => response.data)
+  }
+
+  /**
+   * GET /account_items
+   */
+  getAccountItems(userId: string, companyId: string): Promise<AccountItems> {
+    return api
+      .get<AccountItems>(
+        'api/1/account_items',
+        { company_id: companyId },
+        userId
+      )
       .then(response => response.data)
   }
 
