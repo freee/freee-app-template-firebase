@@ -1,6 +1,8 @@
 import { parse } from 'querystring'
 import { FunctionAPI } from './services/function-api'
 import { getRedirectUrl } from './utils/path'
+// tslint:disable-next-line:no-import-side-effect
+import './main.css'
 
 class Demo {
   private lastUid: string
