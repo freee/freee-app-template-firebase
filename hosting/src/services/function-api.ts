@@ -6,6 +6,14 @@ class FunctionApi {
     return response.data.user.companies
   }
 
+  async getAccountItems(userId: string, companyId: string) {
+    const response = await firebaseUtils.function('accountItems', {
+      userId,
+      companyId
+    })
+    return response.data.account_items
+  }
+
   async postDeal(userId: string, companyId: string, params: any) {
     const response = await firebaseUtils.function('postDeal', {
       userId,

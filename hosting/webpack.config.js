@@ -12,7 +12,7 @@ const getPlugins = envPath => {
       inject: false
     }),
     new MiniCssExtractPlugin({
-      filename: `${__dirname}/dist/main.css`
+      filename: `./main.css`
     })
   ]
   return plugins

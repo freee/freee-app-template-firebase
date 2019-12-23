@@ -11,7 +11,7 @@ html, body {
     width: 640px;
   }
   .mdl-card__supporting-text {
-    height: 320px;
+    height: 400px;
   }
   .mdl-layout__header-row {
     padding: 0;
@@ -41,4 +41,8 @@ html, body {
   }
   #main-container {
     display: none;
+  }
+  .mdl-menu__container {
+    overflow-y: scroll;
+    height: 150px !important;
   }

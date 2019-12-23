@@ -13,6 +13,10 @@ exports.usersMe = baseFunction.https.onCall((data: any) => {
   return FreeeAPI.getUsersMe(data.userId)
 })
 
+exports.accountItems = baseFunction.https.onCall((data: any) => {
+  return FreeeAPI.getAccountItems(data.userId, data.companyId)
+})
+
 exports.postDeal = baseFunction
   .runWith({ timeoutSeconds: 180 })
   .https.onCall((data: any) => {
