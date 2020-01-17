@@ -1,11 +1,11 @@
 # freee-app-template-firebase
 
-このアプリは firebase 上で動作する [freee SDK](https://github.com/freee/firebase-sdk-js) を利用して、
+このアプリは Firebase 上で動作する [freee SDK](https://github.com/freee/firebase-sdk-js) を利用して、
 認証や API コールを行うサンプルコードを実装したものです。
 
 ## サンプルアプリでできること
 
-- freee ログイン画面へリダイレクト -> 認可 -> コールバックで user 情報を firebase に保存 -> ホーム画面へ遷移
+- freee ログイン画面へリダイレクト -> 認可 -> コールバックで user 情報を Firebase に保存 -> ホーム画面へ遷移
 - ログアウト
 - 事業所情報の読み込み (GET api/1/users/me)
 - 取引情報の登録 (POST api/1/deals)
@@ -18,7 +18,7 @@ Firebase での Web アプリ作成については[公式リファレンス](htt
 
 ```
 Root
-├ hosting .. Firebas Hosting にデプロイされるソースのルートフォルダ
+├ hosting .. Firebase Hosting にデプロイされるソースのルートフォルダ
 ├ functions .. Firebase Cloud Functions にデプロイされるソースのルートフォルダ
 　　 ├ config .. 各種 configuration
 　　 ├ config.xxxx.json .. SDKConfig 用の設定情報
@@ -210,6 +210,6 @@ $ firebase functions:config:set env.mode=production env.region="asia-northeast1"
 
 ## FAQ
 
-Q. firebase の料金プランはどうしたら良いか？  
+Q. Firebase の料金プランはどうしたら良いか？  
 A. Blaze プランにする必要があります。freee の API は外部の API にあたり、functions 上からの接続には Blaze プランにする必要があります。
 
