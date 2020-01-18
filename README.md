@@ -37,7 +37,7 @@ $ cd freee-app-template-firebase
 ```
 
 ② firebase-tools をインストール  
-`npm install -g firebase-tools@6.7.1`
+`npm install -g firebase-tools@7.12.1`
 
 ③ firebase にログイン  
 `firebase login`  
