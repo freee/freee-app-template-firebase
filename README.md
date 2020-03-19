@@ -25,6 +25,12 @@ Root
 　　 ├ service-account.json .. Service Account credential file for firebase
 ```
 
+
+## 事前に必要なアプリケーション
+- git
+- nodenv
+- Google Chrome
+
 ## 開発環境のセットアップ
 
 ### Step1: project 作成
@@ -50,19 +56,39 @@ Firestore、Storage デプロイ時にエラーになるため、サイドバー
 ロケーションは特別な理由がない限り`asia-northeast1`で統一してくだだい(Firestore のロケーションは後から変更できないので注意)
 
 ⑤ firebase プロジェクトを紐付け  
-`firebase init` を行い、案内にしたがって設定を行います。
+- `firebase projects:list`を実行し、 [Project ID]を確認する
 
--  どの機能を利用するか聞かれるので、`Firestore, Functions, Hosting, Storage`を選択  
--  firebase プロジェクトを新規作成するか、作成したものを選択するか聞かれるので、先ほど作成したプロジェクトを選択  
--  functions の言語を聞かれるので、typescript を選択  
--  tslint を適用するか聞かれるので、yes を選択  
--  npm install を今行うか聞かれるので、no を選択  
--  その他上書きが発生する場合は、全て no を選択
+出力例)
+
+```
+
+┌──────────────────────────────┬───────────────────────────────────┬──────────────────────┐
+│ Project Display Name         │ Project ID                        │ Resource Location ID │
+├──────────────────────────────┼───────────────────────────────────┼──────────────────────┤
+│ template-firebase-local      │ template-firebase-local           │ asia-northeast1      │
+├──────────────────────────────┼───────────────────────────────────┼──────────────────────┤
+
+
+```
+
+- `firebase use [Project ID]`を実行して現在フォルダとプロジェクトを紐付ける
+
+実行例)
+
+```
+
+firebase use template-firebase-local
+
+```
+
+
 
 ⑥ freee アプリストアでアプリを作成する  
   
-[こちら](https://app.secure.freee.co.jp/developers/demo_companies/description)を参考にしながらアプリを作成してください。  
+[こちら](https://developer.freee.co.jp/tutorials/starting-api)を参考にしながらアプリを作成してください。  
 コールバック URL は `http://localhost:5001/{{project-id}}/us-central1/api/auth/callback` にしてください。
+※us-central1を指定するのはローカルで動作させるためです。
+
 
 ### Step2: Cloud Functions の設定
 
