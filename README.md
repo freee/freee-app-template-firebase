@@ -11,6 +11,10 @@
 - 取引情報の登録 (POST api/1/deals)
 - アクセストークン、リフレッシュトークンの暗号化と key rotation
 
+## 実行環境
+
+Windows環境はサポートしておりません。
+
 ## フォルダ構成
 静的ファイルを所有する任意のドメインで配布する [Firebase Hosting](https://firebase.google.com/docs/hosting/?hl=ja) から [Firebase Cloud Functions](https://firebase.google.com/docs/functions?hl=ja) を call して、 freee API や [Cloud FireStore](https://firebase.google.com/docs/firestore?hl=ja)（NoSQL database）にアクセスしてアプリが動作します。
 
