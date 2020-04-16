@@ -144,7 +144,7 @@ Cloud Functions はサーバーレスで実行できる関数で、ローカル�
   "freee": {
     "authHost": "http://localhost:5001/sample-pjt-freee/us-central1/api/auth",
     "appHost": "http://localhost:5000",
-    "homePath": "/home",
+    "homePath": "/select_company",
     "tokenHost": "https://accounts.secure.freee.co.jp",
     "apiHost": "https://api.freee.co.jp"
   },
