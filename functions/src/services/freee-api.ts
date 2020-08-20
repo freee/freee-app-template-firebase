@@ -59,6 +59,15 @@ export interface Detail {
   id: number // TODO add fields
 }
 
+export interface Receipt {
+  id: number
+  file_src: string
+}
+
+export interface ReceiptResponse {
+  receipt: Receipt
+}
+
 class FreeeApi {
   /**
    * GET /users/me
@@ -68,6 +77,12 @@ class FreeeApi {
       .get<UsersMe>('api/1/users/me', { companies: true }, userId)
       .then(response => response.data)
   }
+
+  // getUsersMeWithContentType(userId: string, contentType: string): Promise<UsersMe> {
+  //   return api
+  //     .get<UsersMe>('api/1/users/me', { companies: true }, userId, contentType)
+  //     .then(response => response.data)
+  // }
 
   /**
    * GET /account_items
@@ -106,6 +121,178 @@ class FreeeApi {
     console.log('post requestParams:', requestParams)
     return api
       .post<T>(path, requestParams, userId)
+      .then(response => {
+        console.error(`response:`, response)
+        response.data
+      })
+      .catch(error => {
+        console.error(`Error all:`, error)
+        console.error(`Error occured for posting ${path}:`, error.response)
+        return error.response.data as any // TODO return proper response
+      })
+  }
+
+  /**
+   * POST /deals contentType
+   */
+  // async postDealWithContentType(
+  //   userId: string,
+  //   companyId: string,
+  //   contentType: string,
+  //   params: any
+  // ): Promise<DealResponse> {
+  //   return this.postWithContentType<DealResponse>(userId, companyId, contentType, 'api/1/deals', params)
+  // }
+  //
+  // private postWithContentType<T = any>(
+  //   userId: string,
+  //   companyId: string,
+  //   contentType: string,
+  //   path: string,
+  //   params: { [key: string]: any }
+  // ): Promise<T> {
+  //   const requestParams = {
+  //     ...params,
+  //     company_id: parseInt(companyId, 10)
+  //   }
+  //   console.log('post requestParams:', requestParams)
+  //   return api
+  //     .post<T>(path, requestParams, userId, contentType)
+  //     .then(response => response.data)
+  //     .catch(error => {
+  //       console.error(`Error occured for posting ${path}:`, error.response)
+  //       return error.response.data as any // TODO return proper response
+  //     })
+  // }
+  //
+  /**
+   * PUT /deals
+   */
+  async putDeal(
+    userId: string,
+    companyId: string,
+    id: string,
+    params: any
+  ): Promise<DealResponse> {
+    return this.put<DealResponse>(
+      userId,
+      companyId,
+      `api/1/deals/${id}`,
+      params
+    )
+  }
+
+  private put<T = any>(
+    userId: string,
+    companyId: string,
+    path: string,
+    params: { [key: string]: any }
+  ): Promise<T> {
+    const requestParams = {
+      ...params,
+      company_id: parseInt(companyId, 10)
+    }
+    console.log('post requestParams:', requestParams)
+    return api
+      .put<T>(path, requestParams, userId)
+      .then(response => response.data)
+      .catch(error => {
+        console.error(`Error occured for posting ${path}:`, error.response)
+        return error.response.data as any // TODO return proper response
+      })
+  }
+
+  /**
+   * get api/1/deals/${id}
+   */
+  getDeal(
+    userId: string,
+    companyId: string,
+    id: string
+  ): Promise<DealResponse> {
+    return api
+      .get<DealResponse>(`api/1/deals/${id}`, { company_id: companyId }, userId)
+      .then(response => response.data)
+  }
+
+  /**
+   * PUT /deals
+   */
+  // async putDealWithContentType(
+  //   userId: string,
+  //   companyId: string,
+  //   id: string,
+  //   contentType: string,
+  //   params: any
+  // ): Promise<DealResponse> {
+  //   return this.putWithContentType<DealResponse>(userId, companyId, contentType, `api/1/deals/${id}`, params)
+  // }
+  //
+  // private putWithContentType<T = any>(
+  //   userId: string,
+  //   companyId: string,
+  //   contentType: string,
+  //   path: string,
+  //   params: { [key: string]: any }
+  // ): Promise<T> {
+  //   const requestParams = {
+  //     ...params,
+  //     company_id: parseInt(companyId, 10)
+  //   }
+  //   console.log('post requestParams:', requestParams)
+  //   return api
+  //     .put<T>(path, requestParams, userId, contentType)
+  //     .then(response => response.data)
+  //     .catch(error => {
+  //       console.error(`Error occured for posting ${path}:`, error.response)
+  //       return error.response.data as any // TODO return proper response
+  //     })
+  // }
+  //
+
+  /**
+   * DELETE api/1/deals
+   */
+  deleteDeal(userId: string, companyId: string, id: string): Promise<any> {
+    return api
+      .delete(`api/1/deals/${id}`, { company_id: companyId }, userId)
+      .then(response => response.data)
+  }
+
+  /**
+   * DELETE api/1/deals
+   */
+  // deleteDealWithContentType(userId: string, companyId: string, id: string, contentType: string): Promise<any> {
+  //   return api
+  //     .delete(`api/1/deals/${id}`, { company_id: companyId }, userId, contentType)
+  //     .then(response => response.data)
+  // }
+
+  /**
+   * POST /api/1/receipts contentType
+   */
+  async postReceipt(
+    userId: string,
+    companyId: string,
+    params: any
+  ): Promise<ReceiptResponse> {
+    return this.postFormData<ReceiptResponse>(
+      userId,
+      companyId,
+      'api/1/receipts',
+      params
+    )
+  }
+
+  private postFormData<T = any>(
+    userId: string,
+    companyId: string,
+    path: string,
+    params: FormData
+  ): Promise<T> {
+    console.log('post FormData:', params)
+    return api
+      .post<T>(path, params, userId)
       .then(response => response.data)
       .catch(error => {
         console.error(`Error occured for posting ${path}:`, error.response)
