@@ -4,6 +4,7 @@ import * as functions from 'firebase-functions'
 import freeeSDK from './freee_sdk/instance'
 import { authApp } from './routes/auth'
 import { FreeeAPI } from './services/freee-api'
+import { createReadStream } from 'fs'
 
 const baseFunction = functions.region('asia-northeast1')
 
@@ -12,10 +13,6 @@ exports.api = baseFunction.https.onRequest(authApp)
 exports.usersMe = baseFunction.https.onCall((data: any) => {
   return FreeeAPI.getUsersMe(data.userId)
 })
-
-// exports.getUsersMeWithContentType = baseFunction.https.onCall((data: any) => {
-//   return FreeeAPI.getUsersMeWithContentType(data.userId, 'application/json')
-// })
 
 exports.accountItems = baseFunction.https.onCall((data: any) => {
   return FreeeAPI.getAccountItems(data.userId, data.companyId)
@@ -47,13 +44,14 @@ exports.postReceipt = baseFunction
   .runWith({ timeoutSeconds: 180 })
   .https.onCall((data: any) => {
     const { userId, companyId } = data
-    const formData = new FormData()
-    const content = 'test'
-    const receipt = new Blob([content], { type: 'text/csv' })
+    const receipt = createReadStream('./functions/dist/test.csv')
 
-    formData.append('receipt', receipt)
-    formData.append('company_id', companyId)
-    return FreeeAPI.postReceipt(userId, companyId, formData)
+    const sendData = {
+      receipt: receipt,
+      company_id: companyId
+    }
+
+    return FreeeAPI.postReceipt(userId, companyId, sendData)
   })
 
 exports.keyRotation = baseFunction.pubsub
