@@ -122,7 +122,7 @@ class FreeeApi {
       .catch(error => {
         console.error(`Error all:`, error)
         console.error(`Error occured for posting ${path}:`, error.response)
-        return error.response.data as any // TODO return proper response
+        return error.response.data // TODO return proper response
       })
   }
 
@@ -159,7 +159,7 @@ class FreeeApi {
       .then(response => response.data)
       .catch(error => {
         console.error(`Error occured for posting ${path}:`, error.response)
-        return error.response.data as any // TODO return proper response
+        return error.response.data // TODO return proper response
       })
   }
 
