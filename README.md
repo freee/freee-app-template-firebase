@@ -222,7 +222,7 @@ $ firebase use {{project-id}}
   },
   "firebase": {
     "apiKey": "{{project-api-key}}",
-    "cryptoKeyBucket": {{project-id}}.appspot.com"
+    "cryptoKeyBucket": "{{project-id}}.appspot.com"
   }
 }
 ```
