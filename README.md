@@ -231,7 +231,7 @@ $ firebase use {{project-id}}
 以下を参考にコマンドラインから設定してください。
 
 ```
-$ firebase functions:config:set env.mode=production env.region="asia-northeast1" freee.client_id=xxx freee.client_secret=xxx env.serviceaccountpath="config/service-account.json"
+$ firebase functions:config:set env.mode=production env.region="asia-northeast1" freee.client_id=xxx freee.client_secret=xxx env.serviceaccountpath="config/service-account.production.json"
 ```
 
 ### デプロイの実行
