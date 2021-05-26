@@ -61,7 +61,7 @@ Firebase での Web アプリ作成については[公式リファレンス](htt
 - nodenv
 - Google Chrome
 
-### Step1: Firebase プロジェクトと freee アプリの作成
+### Step 1: Firebase プロジェクトと freee アプリの作成
 
 1. リポジトリをクローンする。
    ```
@@ -100,7 +100,7 @@ Firebase での Web アプリ作成については[公式リファレンス](htt
 1. freee アプリストアで freee アプリを作成する。（ [こちら](https://developer.freee.co.jp/tutorials/starting-api)を参考にしながら freee アプリを作成してください。）
     - コールバック URL は `http://localhost:5001/{{project-id}}/us-central1/api/auth/callback` にしてください。
 
-### Step2: Firebase Cloud Functions の設定
+### Step 2: Firebase Cloud Functions の設定
 
 Firebase Cloud Functions はサーバーレスで実行できる関数で、ローカルで動かすこともできます。
 
@@ -153,7 +153,7 @@ Firebase Cloud Functions はサーバーレスで実行できる関数で、ロ�
    }
    ```
 
-### Step3: Firebase Hosting の設定
+### Step 3: Firebase Hosting の設定
 
 Firebase Hosting は静的なファイル（HTML, JavaScript等）をデプロイして任意のドメインで公開できるホスティングサービスです。
 
@@ -178,16 +178,16 @@ Firebase Hosting は静的なファイル（HTML, JavaScript等）をデプロ�
    CFO_DOMAIN=https://secure.freee.co.jp
    ```
 
-### Step4: アプリの起動
+### Step 4: アプリの起動
 
 1. `npm run setup` を実行する。
 1. `npm start` を実行し、`http://localhost:5000` （hosting のURL）にアクセスする。
 
 ## 本番環境のセットアップ
 
-### Step1: Firebase プロジェクトの作成
+### Step 1: Firebase プロジェクトの作成
 
-1. 本番環境用に改めて Firebase プロジェクトと freee アプリを作成してください。（開発環境のセットアップのStep1を参考にしてください。）
+1. 本番環境用に改めて Firebase プロジェクトと freee アプリを作成してください。（開発環境のセットアップのStep 1を参考にしてください。）
     - freee アプリのコールバック URL には、以下を設定してください。
         - `https://asia-northeast1-[Project ID].cloudfunctions.net/api/auth/callback`
 1. コマンドラインから本番環境用に作成したプロジェクトの利用するように切り替えます。
@@ -195,7 +195,7 @@ Firebase Hosting は静的なファイル（HTML, JavaScript等）をデプロ�
    firebase use [Project ID]
    ```
 
-### Step2: Firebase Cloud Functions の設定
+### Step 2: Firebase Cloud Functions の設定
 
 開発環境用に設定した各種設定ファイルについても、 本番環境用のファイルを作成する必要があります。
 
@@ -228,7 +228,7 @@ Firebase Hosting は静的なファイル（HTML, JavaScript等）をデプロ�
 $ firebase functions:config:set env.mode=production env.region="asia-northeast1" freee.client_id=xxx freee.client_secret=xxx env.serviceaccountpath="config/service-account.production.json"
 ```
 
-### Step3: デプロイの実行
+### Step 3: デプロイの実行
 
 `npm run deploy` を実行してください。
 
