@@ -7,10 +7,10 @@
 ## このアプリでできること
 
 - ログイン（freee アカウントの認証）
-    1. freee ログイン画面の表示
-    1. freee アカウントの認証と認可
-    1. コールバックで freee アカウントの情報を Firebase に保存
-    1. ログイン後のホーム画面の表示
+    - freee ログイン画面の表示
+    - freee アカウントの認証と認可
+    - コールバックで freee アカウントの情報を Firebase に保存
+    - ログイン後のホーム画面の表示
 - ログアウト
 - 事業所情報の取得
     - SDK を利用して freee API の GET api/1/users/me を呼び出します
@@ -235,5 +235,5 @@ $ firebase functions:config:set env.mode=production env.region="asia-northeast1"
 ## FAQ
 
 Q. Firebase の料金プランはどうしたら良いか？
-A. Blaze プランにする必要があります。freee の API は外部の API にあたり、functions 上からの接続には Blaze プランにする必要があります。
 
+A. Blaze プランにする必要があります。freee の API は外部の API にあたり、functions 上からの接続には Blaze プランにする必要があります。
