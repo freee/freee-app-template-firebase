@@ -77,7 +77,7 @@ Firebase での Web アプリ作成については[公式リファレンス](htt
    firebase login
    ```
 1. Firebase のコンソールで Firebase プロジェクトを作成する。（ https://console.firebase.google.com/u/0/?hl=ja を参考にしながら Firebase プロジェクトを作成してください。）
-1. 作成した Firebase プロジェクトの詳細画面を開き、サイドバーから Authentication を選択し はじめる をクリックして Authentication をアクティベートする。
+1. 作成した Firebase プロジェクトの詳細画面を開き、サイドバーから Authentication を選択し 始める をクリックして Authentication をアクティベートする。
 1. 同様にサイドバーから Firestore を選択し データベースの作成 をクリックして Firestore をアクティベートする。
     - テストモードで開始するにチェックを入れてください。
     - ロケーションは asia-northeast1 を選択してください。
@@ -173,9 +173,6 @@ Firebase Hosting は静的なファイル（HTML, JavaScript等）をデプロ�
    # fucntionsのonCall呼び出しをローカルで動かす時に必要設定(CORSエラー対策)
    CLOUD_FUNCTION_LOCAL_HOST=http://localhost:5001
 
-   # src/firebase/firebase_app で利用する設定ファイルを分岐させるため
-   REACT_APP_APP_ENV=local
-
    # hosting が接続する functions のリージョンを指定する
    HOSTING_REQUEST_FUNCTIONS_REGION=us-central1
 
@@ -204,7 +201,7 @@ Firebase Hosting は静的なファイル（HTML, JavaScript等）をデプロ�
 
 開発環境用に設定した各種設定ファイルについても、 本番環境用のファイルを作成する必要があります。
 
-- `service-account.production.json`
+- `functions/src/config/service-account.production.json`
 - `functions/src/config/config.production.json`
 
 `functions/src/config/config.production.json` の設定例
@@ -212,28 +209,53 @@ Firebase Hosting は静的なファイル（HTML, JavaScript等）をデプロ�
 ```
 {
   "freee": {
-    "authHost": "https://asia-northeast1-{{project-id}}.cloudfunctions.net/api/auth",
-    "appHost": "{{hosting-url}}/home",
+    "authHost": "https://asia-northeast1-[Project ID].cloudfunctions.net/api/auth",
+    "appHost": "https://[Project ID].web.app/home",
     "homePath": "/select_company",
     "tokenHost": "https://accounts.secure.freee.co.jp",
     "apiHost": "https://api.freee.co.jp"
   },
   "firebase": {
-    "apiKey": "{{project-api-key}}",
-    "cryptoKeyBucket": "{{project-id}}.appspot.com"
+    "apiKey": "[ウェブ API キー]",
+    "cryptoKeyBucket": "[Project ID].appspot.com"
   }
 }
 ```
 
-また本番環境で Firebase Cloud Functions を動作させるためには、`.runtimeconfig.json` の内容を Firebase Cloud Functions に設定する必要があります。[こちら](https://firebase.google.com/docs/functions/config-env#set_environment_configuration_for_your_project)を参考に Firebase Cloud Functions の環境変数設定を行ってください。
+また本番環境で Firebase Cloud Functions を動作させるためには、`.runtimeconfig.json` の内容を Firebase Cloud Functions に設定する必要があります。
 
-以下を参考にコマンドラインから設定してください。
+以下を参考にコマンドラインから設定してください。（[こちら](https://firebase.google.com/docs/functions/config-env#set_environment_configuration_for_your_project)も参考にしてください）
 
 ```
-$ firebase functions:config:set env.mode=production env.region="asia-northeast1" freee.client_id=xxx freee.client_secret=xxx env.serviceaccountpath="config/service-account.production.json"
+firebase functions:config:set env.mode=production env.region="asia-northeast1" freee.client_id=xxx freee.client_secret=xxx env.serviceaccountpath="config/service-account.production.json"
 ```
 
-### Step 3: デプロイの実行
+### Step 3: Firebase Hosting の設定
+
+Firebase Hosting も同様に本番環境用の設定に入れ替える必要があります。
+
+- `hosting/.env`
+
+以下の内容に変更してください。再度開発環境を利用する場合は、開発環境のセットアップの手順を参考に開発環境用の設定に戻してください。
+
+```
+# functions の URL
+CLOUD_FUNCTION_HOST=https://asia-northeast1-[Project ID].cloudfunctions.net
+
+# hosting が接続する functions のリージョンを指定する
+HOSTING_REQUEST_FUNCTIONS_REGION=asia-northeast1
+
+# 会計 freee のドメイン
+CFO_DOMAIN=https://secure.freee.co.jp
+```
+
+### Step 4: Cloud Build API
+
+Firebase Cloud Functions のデプロイに、 Cloud Build API を利用する必要があるので Cloud Build API を有効にします。
+
+https://console.cloud.google.com/apis/library/cloudbuild.googleapis.com?project=[Project ID] を開き、有効にするをクリックしてください。
+
+### Step 4: デプロイの実行
 
 `npm run deploy` を実行してください。
 
@@ -241,4 +263,4 @@ $ firebase functions:config:set env.mode=production env.region="asia-northeast1"
 
 Q. Firebase の料金プランはどうしたら良いか？
 
-A. Blaze プランにする必要があります。freee の API は外部の API にあたり、functions 上からの接続には Blaze プランにする必要があります。
+A. 開発環境用の Firebase は無料の Spark プランで動作させることができます。本番環境用の Firebase は Blaze プランにする必要があります。
