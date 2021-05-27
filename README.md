@@ -24,7 +24,7 @@ Windows環境はサポートしておりません。
 
 ## フォルダ構成
 
-このアプリでは以下の firebase のサービスを利用します。
+このアプリでは以下の Firebase のサービスを利用します。
 
 - 静的ファイルを任意のドメインで配信する [Firebase Hosting](https://firebase.google.com/docs/hosting/?hl=ja)
 - freee API を呼び出す [Firebase Cloud Functions](https://firebase.google.com/docs/functions?hl=ja)
@@ -58,7 +58,7 @@ Firebase での Web アプリ作成については[公式リファレンス](htt
 ### 事前に必要なアプリケーション
 
 - git
-- nodenv
+- Node.js 8
 - Google Chrome
 
 ### Step 1: Firebase プロジェクトと freee アプリの作成
@@ -72,13 +72,16 @@ Firebase での Web アプリ作成については[公式リファレンス](htt
    ```
    npm install -g firebase-tools@7.12.1
    ```
-1. firebase にログインする。（ブラウザで認証画面が表示されるので、承認してください。）
+1. Firebase にログインする。（ブラウザで認証画面が表示されるので、承認してください。）
    ```
    firebase login
    ```
-1. firebase のコンソールで firebase プロジェクトを作成する。（ https://console.firebase.google.com/u/0/?hl=ja を参考にしながら firebase プロジェクトを作成してください。）
-1. 作成した firebase プロジェクトの詳細画面を開き、サイドバーから Firestore を選択し Firestore をアクティベートする。（ ロケーションは `asia-northeast1` を選択してください。）
-1. 同様にサイドバーから Storage を選択し Storage をアクティベートする。（ ロケーションは `asia-northeast1` を選択してください。）
+1. Firebase のコンソールで Firebase プロジェクトを作成する。（ https://console.firebase.google.com/u/0/?hl=ja を参考にしながら Firebase プロジェクトを作成してください。）
+1. 作成した Firebase プロジェクトの詳細画面を開き、サイドバーから Authentication を選択し はじめる をクリックして Authentication をアクティベートする。
+1. 同様にサイドバーから Firestore を選択し データベースの作成 をクリックして Firestore をアクティベートする。
+    - テストモードで開始するにチェックを入れてください。
+    - ロケーションは asia-northeast1 を選択してください。
+1. 同様にサイドバーから Storage を選択し Storage をアクティベートする。
 1. 作成したプロジェクトの [Project ID] を確認する。
    ```
    firebase projects:list
@@ -90,7 +93,7 @@ Firebase での Web アプリ作成については[公式リファレンス](htt
    │ template-firebase-local      │ template-firebase-local           │ asia-northeast1      │
    ├──────────────────────────────┼───────────────────────────────────┼──────────────────────┤
    ```
-1. firebase プロジェクトを紐付ける。
+1. Firebase プロジェクトを紐付ける。
    ```
    firebase use [Project ID]
 
@@ -114,12 +117,11 @@ Firebase Cloud Functions はサーバーレスで実行できる関数で、ロ�
        "mode": "local"
      },
      "freee": {
-       "client_id": "登録したfreeアプリのclient_id",
-       "client_secret": "登録したfreeアプリのclient_secret"
+       "client_id": "作成した freee アプリの client_id",
+       "client_secret": "作成した freee アプリの client_secret"
      }
    }
    ```
-   ※ runtimeconfig は Cloud Functions をローカルで動作させる場合のみ function に反映されます。 Firebase 上で動作させる場合は[こちら](https://firebase.google.com/docs/functions/config-env#set_environment_configuration_for_your_project)を参考に、環境変数を設定してください。
 1. Firebase 用の設定ファイルを準備する。[こちら](https://firebase.google.com/docs/auth/web/custom-auth?hl=ja) を参考に JSON file をダウンロードし、 `functions/src/config/service-account.local.json` というファイル名で保存してください。
    `service-account.local.json` の中身の例
    ```
@@ -137,18 +139,21 @@ Firebase Cloud Functions はサーバーレスで実行できる関数で、ロ�
    }
    ```
 1. freee SDK 用の設定ファイルを準備する。 `functions/src/config/config.local.json` に以下のファイルを準備してください。
+   [ウェブ API キー] は 以下の手順で確認してください。
+   Firebase のコンソールでプロジェクトの概要の右側にある歯車アイコンからプロジェクトの設定をクリックする。
+   全般タブ内にある ウェブ API キー の値を確認する。
    ```
    {
      "freee": {
-       "authHost": "http://localhost:5001/{{project-id}}/us-central1/api/auth",
+       "authHost": "http://localhost:5001/[Project ID]/us-central1/api/auth",
        "appHost": "http://localhost:5000",
        "homePath": "/select_company",
        "tokenHost": "https://accounts.secure.freee.co.jp",
        "apiHost": "https://api.freee.co.jp"
      },
      "firebase": {
-       "apiKey": "{{project-api-key}}",
-       "cryptoKeyBucket": "{{project-id}}.appspot.com"
+       "apiKey": "[ウェブ API キー]",
+       "cryptoKeyBucket": "[Project ID].appspot.com"
      }
    }
    ```
@@ -163,7 +168,7 @@ Firebase Hosting は静的なファイル（HTML, JavaScript等）をデプロ�
    hosting/.env に以下の設定を記載してください。
    ```
    # functions の URL
-   CLOUD_FUNCTION_HOST=http://localhost:5001/{{project-id}}/us-central1
+   CLOUD_FUNCTION_HOST=http://localhost:5001/[Project ID]/us-central1
 
    # fucntionsのonCall呼び出しをローカルで動かす時に必要設定(CORSエラー対策)
    CLOUD_FUNCTION_LOCAL_HOST=http://localhost:5001
