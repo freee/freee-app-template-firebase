@@ -255,7 +255,7 @@ Firebase Cloud Functions のデプロイに、 Cloud Build API を利用する�
 
 https://console.cloud.google.com/apis/library/cloudbuild.googleapis.com?project=[Project ID] を開き、有効にするをクリックしてください。
 
-### Step 4: デプロイの実行
+### Step 5: デプロイの実行
 
 `npm run deploy` を実行してください。
 
