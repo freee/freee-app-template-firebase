@@ -24,7 +24,7 @@
     "express": "4.17.1",
     "firebase-admin": "8.13.0",
     "firebase-functions": "3.2.0",
-    "freee-firebase-sdk": "^2.0.1"
+    "freee-firebase-sdk": "2.0.4"
   },
   "devDependencies": {
     "tslint": "^5.12.0",
