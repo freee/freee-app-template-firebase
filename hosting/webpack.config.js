@@ -4,9 +4,11 @@ const Dotenv = require('dotenv-webpack')
 const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-const getPlugins = envPath => {
+const getPlugins = () => {
   const plugins = [
-    new Dotenv({ path: envPath }),
+    new Dotenv({
+      path: `.env.${process.env.NODE_ENV}`
+    }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src/index.html'),
       inject: false
@@ -27,7 +29,6 @@ const getDevtool = () => {
 }
 
 module.exports = env => {
-  let envPath = './.env'
   let dropConsole = false
   if (env && env.dropConsole) {
     dropConsole = true
@@ -69,7 +70,7 @@ module.exports = env => {
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.css', '.json']
     },
-    plugins: getPlugins(envPath),
+    plugins: getPlugins(),
     devtool: getDevtool(),
     // 開発サーバーの設定
     devServer: {
