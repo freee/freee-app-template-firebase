@@ -164,8 +164,8 @@ Firebase Hosting は静的なファイル（HTML, JavaScript等）をデプロ�
 
 このアプリでは Firebase Hosting から Firebase Cloud Functions を呼び出して、アプリを動作させています。
 
-1. `.env` を設定する。
-   hosting/.env に以下の設定を記載してください。
+1. `.env.development` を設定する。
+   hosting/.env.development に以下の設定を記載してください。
    ```
    # functions の URL
    CLOUD_FUNCTION_HOST=http://localhost:5001/[Project ID]/us-central1
@@ -232,11 +232,9 @@ firebase functions:config:set env.mode=production env.region="asia-northeast1" f
 
 ### Step 3: Firebase Hosting の設定
 
-Firebase Hosting も同様に本番環境用の設定に入れ替える必要があります。
+Firebase Hosting も同様に、本番環境用の設定ファイルを作成する必要があります。
 
-- `hosting/.env`
-
-以下の内容に変更してください。再度開発環境を利用する場合は、開発環境のセットアップの手順を参考に開発環境用の設定に戻してください。
+- `hosting/.env.production`
 
 ```
 # functions の URL
