@@ -70,7 +70,7 @@ Firebase での Web アプリ作成については[公式リファレンス](htt
    ```
 1. firebase-tools をインストールする。
    ```
-   npm install -g firebase-tools@7.12.1
+   npm install -g firebase-tools@7.16.2
    ```
 1. Firebase にログインする。（ブラウザで認証画面が表示されるので、承認してください。）
    ```
