@@ -58,7 +58,7 @@ Firebase での Web アプリ作成については[公式リファレンス](htt
 ### 事前に必要なアプリケーション
 
 - git
-- Node.js 8
+- Node.js 10
 - Google Chrome
 
 ### Step 1: Firebase プロジェクトと freee アプリの作成
