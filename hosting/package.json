@@ -6,7 +6,7 @@
     "fmt": "prettier --config '../.prettierrc' --write 'src/**/*.{tsx,ts}'"
   },
   "engines": {
-    "node": "10"
+    "node": "12"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
