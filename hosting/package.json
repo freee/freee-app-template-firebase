@@ -5,6 +5,9 @@
     "watch": "NODE_ENV=development webpack --mode development -w",
     "fmt": "prettier --config '../.prettierrc' --write 'src/**/*.{tsx,ts}'"
   },
+  "engines": {
+    "node": "10"
+  },
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/dotenv": "^6.1.1",

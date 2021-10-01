@@ -12,6 +12,9 @@
     "hosting-fmt": "cd hosting && npm run fmt",
     "project-fmt": "npm run function-fmt && npm run hosting-fmt"
   },
+  "engines": {
+    "node": "10"
+  },
   "devDependencies": {
     "concurrently": "^4.0.1",
     "husky": "^2.2.0"
