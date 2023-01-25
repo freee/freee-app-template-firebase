@@ -176,7 +176,7 @@ Firebase Hosting は静的なファイル（HTML, JavaScript等）をデプロ�
    # hosting が接続する functions のリージョンを指定する
    HOSTING_REQUEST_FUNCTIONS_REGION=us-central1
 
-   # 会計 freee のドメイン
+   # freee 会計のドメイン
    CFO_DOMAIN=https://secure.freee.co.jp
    ```
 
@@ -243,7 +243,7 @@ CLOUD_FUNCTION_HOST=https://asia-northeast1-[Project ID].cloudfunctions.net
 # hosting が接続する functions のリージョンを指定する
 HOSTING_REQUEST_FUNCTIONS_REGION=asia-northeast1
 
-# 会計 freee のドメイン
+# freee 会計のドメイン
 CFO_DOMAIN=https://secure.freee.co.jp
 ```
 
