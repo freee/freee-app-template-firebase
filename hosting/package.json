@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "firebase serve",
+    "start": "firebase serve --port 5002",
     "build": "NODE_ENV=production webpack --mode production",
     "watch": "NODE_ENV=development webpack --mode development -w",
     "fmt": "prettier --config '../.prettierrc' --write 'src/**/*.{tsx,ts}'"
