@@ -1,3 +1,5 @@
+# このリポジトリは2024年7月にサポートを終了します。 詳細は「[freee 会計 Firebase SDK / freee-app-template-firebaseのメンテナンス終了について](https://developer.freee.co.jp/news/7052)」をご覧ください。
+
 # freee-app-template-firebase
 
 このアプリは Firebase 上で動作する [freee SDK](https://github.com/freee/firebase-sdk-js) を利用して、 freee アカウントの認証や freee API の呼び出しを行うサンプルアプリです。
