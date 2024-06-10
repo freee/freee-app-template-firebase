@@ -1,4 +1,4 @@
-export const DEFAULT_LOCAL_FUNCTIONS_HOST = 'http://localhost:5001'
+export const DEFAULT_LOCAL_FUNCTIONS_HOST = 'http://localhost:5003'
 
 export function getRedirectUrl() {
   const host = process.env.CLOUD_FUNCTION_HOST || getDefaultFunctionsHost()

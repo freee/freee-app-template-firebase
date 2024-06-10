@@ -103,7 +103,7 @@ Firebase での Web アプリ作成については[公式リファレンス](htt
    firebase use template-firebase-local
    ```
 1. freee アプリストアで freee アプリを作成する。（ [こちら](https://developer.freee.co.jp/tutorials/starting-api)を参考にしながら freee アプリを作成してください。）
-    - コールバック URL は `http://localhost:5001/{{project-id}}/us-central1/api/auth/callback` にしてください。
+    - コールバック URL は `http://localhost:5003/{{project-id}}/us-central1/api/auth/callback` にしてください。
 
 ### Step 2: Firebase Cloud Functions の設定
 
@@ -147,8 +147,8 @@ Firebase Cloud Functions はサーバーレスで実行できる関数で、ロ�
    ```
    {
      "freee": {
-       "authHost": "http://localhost:5001/[Project ID]/us-central1/api/auth",
-       "appHost": "http://localhost:5000",
+       "authHost": "http://localhost:5003/[Project ID]/us-central1/api/auth",
+       "appHost": "http://localhost:5002",
        "homePath": "/select_company",
        "tokenHost": "https://accounts.secure.freee.co.jp",
        "apiHost": "https://api.freee.co.jp"
@@ -170,10 +170,10 @@ Firebase Hosting は静的なファイル（HTML, JavaScript等）をデプロ�
    hosting/.env.development に以下の設定を記載してください。
    ```
    # functions の URL
-   CLOUD_FUNCTION_HOST=http://localhost:5001/[Project ID]/us-central1
+   CLOUD_FUNCTION_HOST=http://localhost:5003/[Project ID]/us-central1
 
    # fucntionsのonCall呼び出しをローカルで動かす時に必要設定(CORSエラー対策)
-   CLOUD_FUNCTION_LOCAL_HOST=http://localhost:5001
+   CLOUD_FUNCTION_LOCAL_HOST=http://localhost:5003
 
    # hosting が接続する functions のリージョンを指定する
    HOSTING_REQUEST_FUNCTIONS_REGION=us-central1
@@ -185,7 +185,7 @@ Firebase Hosting は静的なファイル（HTML, JavaScript等）をデプロ�
 ### Step 4: アプリの起動
 
 1. `npm run setup` を実行する。
-1. `npm start` を実行し、`http://localhost:5000` （hosting のURL）にアクセスする。
+1. `npm start` を実行し、`http://localhost:5002` （hosting のURL）にアクセスする。
 
 ## 本番環境のセットアップ
 
