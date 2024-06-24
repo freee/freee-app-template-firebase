@@ -13,7 +13,7 @@
     "project-fmt": "npm run function-fmt && npm run hosting-fmt"
   },
   "engines": {
-    "node": "10"
+    "node": "14"
   },
   "devDependencies": {
     "concurrently": "^4.0.1",
